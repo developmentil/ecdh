@@ -17,7 +17,7 @@
   ],
   "repositories": [{
      "type": "git", 
-	 "url": "https://github.com/DevelopmentIL/ecdh.git",
+	 "url": "https://github.com/DevelopmentIL/ecdh.git"
   }],
   "author": "Moshe Simantov <ms@development.co.i>",
   "license": "MIT",
