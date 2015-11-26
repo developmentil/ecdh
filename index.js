@@ -1,5 +1,5 @@
 var crypto = require('crypto'),
-	BigInteger = require('jsbn'),
+	BigInteger = require('jsbn').BigInteger,
 	ECPointFp = require('./jsbn/ec.js').ECPointFp;
 
 
