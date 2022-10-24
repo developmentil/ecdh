@@ -161,8 +161,30 @@ PrivateKey.prototype.derivePublicKey = function() {
 	return new PublicKey(this.curve, P);
 };
 
+PrivateKey.prototype.onCurve = function(publicKey) {
+        var x = publicKey.Q.getX().x,
+        y = publicKey.Q.getY().x,
+        a = this.curve.curve.a.x,
+        b = this.curve.curve.b.x,
+        q = this.curve.curve.q;
+        
+        if(x.compareTo(BigInteger.ZERO) < 0 || x.compareTo(q) >= 0)
+            return false;
+        
+        if(y.compareTo(BigInteger.ZERO) < 0 || y.compareTo(q) >= 0)
+            return false;
+        
+        var left = (y.pow(2)).mod(q),
+        right = (((x.pow(3)).add(a.multiply(x))).add(b)).mod(q);
+        
+        if (left.compareTo(right) == 0)
+            return true
+        else
+            return false
+};
+
 PrivateKey.prototype.deriveSharedSecret = function(publicKey) {
-	if(!publicKey || !publicKey.Q)
+	if(!publicKey || !publicKey.Q || !this.onCurve(publicKey))
 		throw new Error('publicKey is invaild');
 	
     var S = publicKey.Q.multiply(this.d);
